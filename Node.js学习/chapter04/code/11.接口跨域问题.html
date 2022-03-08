@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>接口跨域问题</title>
+		<script src="https://cdn.staticfile.org/jquery/1.10.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<button id="btnGET">GET</button>
+		<button id="btnPOST">POST</button>
+		<button id="btnJSONP">JSONP</button>
+		<script>
+			$(function(){
+			    //测试GET接口
+			    $('#btnGET').on('click',function(){
+			        $.ajax({
+			            type: 'GET',
+			            url: 'http://127.0.0.1:8080/api/get',
+			            data: {name: 'zs',age: 20},
+			            success: function(res){
+			                console.log(res);
+			            },
+			        })
+			    })
+			    //测试POST接口
+			    $('#btnPOST').on('click',function(){
+			        $.ajax({
+			            type: 'POST',
+			            url: 'http://127.0.0.1:8080/api/post',
+			            data: {bookname: '水浒传',author: '施耐庵'},
+			            success: function(res){
+			                console.log(res);
+			            }
+			        })
+				})
+				 //测试JSONP接口
+			    $('#btnJSONP').on('click',function(){
+			        $.ajax({
+			            type: 'GET',
+			            url: 'http://127.0.0.1:8080/api/jsonp',
+			            dataType: 'jsonp',
+			            success: function(res){
+			                console.log(res);
+			            },
+			        })
+			    })
+			})
+
+		</script>
+	</body>
+</html>
