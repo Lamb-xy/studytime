@@ -5,7 +5,7 @@ import './style/index.less';
 // console.log(food.X, food.Y);
 // food.change();
 // console.log(food.X, food.Y);
-import GameControl from "./moduls/GameControl";
+import GameControl from "./modules/GameControl";
 const gameControl = new GameControl();
 
 // setInterval(()=>{
