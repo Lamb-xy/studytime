@@ -1,0 +1,123 @@
+启动方式：mongod -f ../conf/mongod.conf 
+连接：mongo
+use itcast//使用当前数据库
+db  //显示当前数据库
+show dbs//显示所有数据库名称
+show collections//查看当前db所有集合
+db.dropDatabase()//删除当前数据库
+db.createCollection("mycollection")//通过创建名字创建集合
+db.python.insert({"name":"python"})//自动创建集合
+db.python.drop() //删除集合
+//插入文档
+//通过数组格式一次性插入多个文档
+db.COLLECTION_NAME.insert([document1,document2])
+{
+  "_id" : ObjectId("57d78d91b1a3e5f874cfe47a"),//不指定_id参数，自动分配唯一的ObjectId。
+  "title" : "MongoDB"
+}
+
+//insert函数会报错:当插入的文档自带_id，且和已存在集合中的文档相同
+
+
+db.mycol.find(query)//基本查询文档方法
+db.mycol.findOne(query)//第一条文档
+db.mycol.find(query).pretty()//格式化查询文档方法
+db.comment.find({},{userid:1,nickname:1})//查询所有数据，只返回userid和nickname
+query:
+1.{key1:value1, key2:value2}=>and
+2.{
+      $or: [
+         {key1: value1}, {key2:value2}
+      ]
+   }=>or
+
+//update()更新文档
+db.collection.update(
+   <query>,//查询条件
+   <update>,//更新内容
+   {
+     upsert: <boolean>,//当不存在查询结果是否插入
+     multi: <boolean>,//更新多条记录
+     writeConcern: <document>//抛出异常的级别
+   }
+)
+//save()更新或者插入新文档
+db.collection.save(
+   <document>,
+   {
+     writeConcern: <document>
+   }
+)
+
+//在执行remove()函数前先执行find()命令来判断执行的条件是否正确，这是一个比较好的习惯。
+//删除文档
+db.collection.remove(
+   <query>,//删除条件
+   {
+     justOne: <boolean>,
+     writeConcern: <document>
+   }
+)
+
+db.inventory.find(
+   {
+      quantity: {
+          $gte: 100,
+          $lte: 200
+      }
+  }
+).explain("executionStats")//explain知道系统如何处理查询请求
+
+//创建索引createIndex
+db.inventory.createIndex({ quantity: 1})//quantity升序
+//查看索引getIndexes
+db.inventory.getIndexes()
+
+//聚合aggregate
+
+db.mycol.aggregate([ { $group: { _id: "$by_user", num_tutorial: { $sum: 1 } } }])
+
+//聚合管道($)：当前命令输出结果作为下一个命令的输入
+
+//$project：修改文档结构。select
+//指定输出字段
+title: 1
+//输出嵌入式文档中field
+"author.last": 1
+//改变输出结构
+"lastName": "$author.last"
+//计算 Fields
+prefix: { $substr: [ "$isbn", 1, 3 ] }
+
+//$match：过滤数据。where
+使用find,同一个score键，后者覆盖前者
+db.articles.find( { $or: [  { score: { $gt: 70 }, score:{ $lt: 90 } }, { views: { $gte: 1000 } } ]})
+
+//$limit：限制返回文档数
+
+//$skip：跳过指定数量的文档，并返回余下的文档。
+
+//$unwind：将文档中的某一个数组类型字段拆分成多条，每条包含数组中的一个值。
+{
+  $unwind:
+    {
+      path: <field path>,          //拆分路径
+      includeArrayIndex: <string>,   //指定数组索引号
+      preserveNullAndEmptyArrays: <boolean>   //防止数据丢失
+    }
+}
+//$group：将集合中的文档分组。group by
+
+//$sort：将输入文档排序后输出。order by
+
+//$lookup左连接到一个集合
+{
+   $lookup:
+     {
+       from: <collection to join>,   #右集合
+       localField: <field from the input documents>,  #左集合 join字段
+       foreignField: <field from the documents of the "from" collection>, #右集合 join字段
+       as: <output array field>   #新生成字段（类型array）
+     }
+}
+//$out输出到集合
