@@ -37,7 +37,7 @@ const mutations = {
 	JIAN(state,value){
 		console.log('mutations中的JIAN被调用了')
 		state.sum -= value
-	}
+	} 
 }
 //准备state——用于存储数据
 const state = {

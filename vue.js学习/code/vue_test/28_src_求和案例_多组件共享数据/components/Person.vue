@@ -20,12 +20,8 @@
 			}
 		},
 		computed:{
-			personList(){
-				return this.$store.state.personList
-			},
-			sum(){
-				return this.$store.state.sum
-			}
+			...mapState(['personList']),
+			...mapState(['sum']),
 		},
 		methods: {
 			add(){

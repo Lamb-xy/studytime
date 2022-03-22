@@ -23,23 +23,21 @@
 
 	<script type="text/javascript">
 		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
-		
-		 new Vue({
-			el:'#root',
-			data:{
-				a:false,
-				opacity:1
+
+		new Vue({
+			el: '#root',
+			data: {
+				a: false,
+				opacity: 1,
 			},
-			methods: {
-				
-			},
+			methods: {},
 			//Vue完成模板的解析并把初始的真实DOM元素放入页面后（挂载完毕）调用mounted
-			mounted(){
-				console.log('mounted',this)
+			mounted() {
+				console.log('mounted', this)
 				setInterval(() => {
 					this.opacity -= 0.01
-					if(this.opacity <= 0) this.opacity = 1
-				},16)
+					if (this.opacity <= 0) this.opacity = 1
+				}, 16)
 			},
 		})
 

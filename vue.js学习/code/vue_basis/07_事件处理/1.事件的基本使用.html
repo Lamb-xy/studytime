@@ -20,6 +20,7 @@
 			<h2>欢迎来到{{name}}学习</h2>
 			<!-- <button v-on:click="showInfo">点我提示信息</button> -->
 			<button @click="showInfo1">点我提示信息1（不传参）</button>
+			<!-- 加()表示传递参数 -->
 			<button @click="showInfo2($event,66)">点我提示信息2（传参）</button>
 		</div>
 	</body>
@@ -33,11 +34,13 @@
 				name:'尚硅谷',
 			},
 			methods:{
+				// event是默认传递的参数
 				showInfo1(event){
-					// console.log(event.target.innerText)
+					console.log(event.target.innerText)
 					// console.log(this) //此处的this是vm
 					alert('同学你好！')
 				},
+		
 				showInfo2(event,number){
 					console.log(event,number)
 					// console.log(event.target.innerText)
