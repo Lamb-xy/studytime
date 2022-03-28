@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios 发送 AJAX 请求</title>
+    <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+    <button>GET</button>
+    <button>POST</button>
+    <button>AJAX</button>
+    <script>
+        const btn = document.querySelectorAll('button');
+        axios.defaults.baseURL = 'http://127.0.0.1:8000';
+        btns[0].onclick = function(){
+            axios.get('axios-server',{
+                params: {
+                    id:100,
+                    vip:7
+                },
+                Headers: {
+                    name:'atguigu',
+                    age:20
+                }
+            }).then(value=>{
+                console.log(value);
+            })
+        }
+        btns[1].onclick=function(){
+            axios.post('/axios-server', {
+                    username:'admin',
+                    password:'admin'
+                },
+                {
+                params: {
+                    id:200,
+                    vip:9
+                },
+                Headers: {
+                    height:180,
+                    weight:180,
+                },
+            })
+        }
+        btns[2].onclick=function(){
+            axios({
+                method: 'POST',
+                url: '/axios-server',
+                params: {
+                    vip:10,
+                    level:30
+                },
+                Headers: {
+                    a:100,
+                    b:200
+                },
+                data: {
+                    username: 'admin',
+                    password: 'admin'
+                }
+            }).then(Response=>{
+                console.log(response);
+                console.log(response.status);
+                console.log(response.statusText);
+                console.log(response.headers);
+                console.log(response.data);
+            })
+        }
+    </script>
+</body>
+</html>
